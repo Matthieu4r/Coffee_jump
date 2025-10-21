@@ -5,6 +5,7 @@ extends Node2D
 @export var vertical_gap : int = 120
 @export var horizontal_range : int = 300
 @export var player_node_path : NodePath
+@export var cleanup_margin : float = 100.0  # distance sous le joueur avant suppression
 
 var platforms : Array = []
 var player : Node2D = null
@@ -30,12 +31,14 @@ func _physics_process(_delta):
 	if player.global_position.y < highest_platform_y + 300:
 		spawn_platform(Vector2(randf_range(-horizontal_range, horizontal_range), highest_platform_y - vertical_gap))
 
-	# Supprimer les plateformes trop basses
+
+	# --- NE PAS supprimer les plateformes proches ---
+	# On ne supprime que celles TRÈS loin en dessous du joueur pour permettre la chute
 	for p in platforms.duplicate():
-		if p.global_position.y > player.global_position.y + 400:
+		if p.global_position.y > player.global_position.y + cleanup_margin:
 			platforms.erase(p)
 			p.queue_free()
-
+			
 func spawn_platform(pos : Vector2):
 	var p = platform_scene.instantiate()
 	add_child(p)
