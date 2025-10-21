@@ -5,7 +5,7 @@ extends Node2D
 @export var vertical_gap : int = 120
 @export var horizontal_range : int = 300
 @export var player_node_path : NodePath
-@export var cleanup_margin : float = 100.0  # distance sous le joueur avant suppression
+@export var cleanup_margin : float = 400.0  # distance sous le joueur avant suppression
 
 var platforms : Array = []
 var player : Node2D = null
